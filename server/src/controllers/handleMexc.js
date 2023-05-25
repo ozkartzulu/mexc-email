@@ -1,7 +1,7 @@
-
+require('dotenv').config()
 const Mexc = require('../../mexc-sdk');
-const apiKey = 'mx0vglCAaF6jItwCTX'
-const apiSecret = '20e3da8402044d21bdc0a478d15916f5'
+const apiKey = process.env.API_KEY
+const apiSecret = process.env.API_SECRET
 const client = new Mexc.Spot(apiKey, apiSecret);
 
 const getPriceBySymbol = async (req, res) => {
