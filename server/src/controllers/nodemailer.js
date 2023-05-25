@@ -33,6 +33,7 @@ const handlerMailerTest = async (req, res) => {
 }
 
 const handlerMailer = async (req, res) => {
+    const coin = req.body
     let config = {
         service: 'gmail',
         auth: {
@@ -45,19 +46,22 @@ const handlerMailer = async (req, res) => {
 
     const htmlBody = `
     <h1 style='font-size: 18px; text-align: center;'>You need review you mexc accout</h1>
+    <div>
+        <p style='font-weight: bold'>The Cryptocurrency ${coin.symbol} go up: <span style=''>${coin.percentage}%</span></p>
+    </div>
     `
 
     const message = {
         from: process.env.EMAIL, // sender address
         to: "ozkart.zand.io@gmail.com", // list of receivers
-        subject: "MEXC Buy Alcoin", // Subject line
+        subject: "MEXC Notification", // Subject line
         text: "Alert!!, you need check out you mexc account", // plain text body
         html: htmlBody, // html body
     }
 
     let info = await transporter.sendMail(message)
         .then((resp) => res.json({
-            msg: 'You email was sent'
+            state: true
         }))
         .catch(error => res.status(500).json({ error }))
 }
