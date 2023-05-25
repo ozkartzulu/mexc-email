@@ -1,6 +1,6 @@
-
+require('dotenv').config()
 const nodemailer = require('nodemailer')
-const { EMAIL, PASSWORD } = require('../../env')
+
 
 const handlerMailerTest = async (req, res) => {
 
@@ -36,8 +36,8 @@ const handlerMailer = async (req, res) => {
     let config = {
         service: 'gmail',
         auth: {
-            user: EMAIL,
-            pass: PASSWORD
+            user: process.env.EMAIL,
+            pass: process.env.PASSWORD
         }
     }
 
@@ -48,7 +48,7 @@ const handlerMailer = async (req, res) => {
     `
 
     const message = {
-        from: EMAIL, // sender address
+        from: process.env.EMAIL, // sender address
         to: "ozkart.zand.io@gmail.com", // list of receivers
         subject: "MEXC Buy Alcoin", // Subject line
         text: "Alert!!, you need check out you mexc account", // plain text body
@@ -59,7 +59,7 @@ const handlerMailer = async (req, res) => {
         .then((resp) => res.json({
             msg: 'You email was sent'
         }))
-        .catch(error => res.status(500).json(error.message))
+        .catch(error => res.status(500).json({ error }))
 }
 
 module.exports = {
